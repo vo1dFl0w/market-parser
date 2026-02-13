@@ -1,0 +1,44 @@
+server:
+  env: "local"
+  http_addr: # http_addr from .env
+  request_timeout: 180000ms
+  kuper_config:
+    base_url: "https://kuper.ru"
+    api_products_path: "products"
+    current_address_selector: "span[data-qa*='current-ship-address']"
+    address_button_selector: "button[data-qa*='select-button']"
+    address_input_selector: "input[placeholder*='Ваш адрес']"
+    address_check_attribute_value: "value"
+    address_input_drop_down_selector: "div[class*='SearchSelectForMap_dropdown']"
+    address_save_button_selector: "span[class*='DeliveryMap2GIS']"
+    market_selector: "img[alt='METRO']"
+    all_prods_selector: "a[title='Все товары категории']"
+    last_page_selector: "div[class*='last']"
+    last_page_text: "a[class*='link']"
+    next_page_selector: "div[class*='Pagination_next']"
+  shutdown_timeout: 15000ms
+
+browser:
+  user_data_dir: /user-data-dir
+  user_data_dir_local: /home/voidflow/.config/chromium
+  profile_dir: Default
+  ws_url: ws://chromium:7317 # ws_url from .env
+  headless: true
+  human_like_mode: true
+  test_parser_mode: true
+  proxy:
+    ip: # ip from .env
+    port: # port from .env
+    login: # login from .env
+    password: # password from .env
+  referer: "https://google.com"
+  accept_language: "ru-RU,ru;q=0.9"
+  work_timeout: 5000ms
+  session_timeout: 180000ms
+  wait_stable_duration: 500ms
+  wait_dom_stable_duration: 300ms
+  wait_dom_stable_diff: 0.85
+  wait_request_idle_duration: 300ms
+
+options:
+  logger_time_format: "02-01-2006 15:04:05"

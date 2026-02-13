@@ -1,0 +1,104 @@
+openapi: 3.0.0
+info:
+  title: "Specification for market parser."
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+
+package: api
+generate:
+  std-http-server: true
+  models: true
+output: gen.go
+
+paths:
+  /api/v1/market-parser/parse:
+    get:
+      summary: "Parse category."
+      description: "Search for products by name and price range."
+      parameters:
+        - name: category
+          in: query
+          description: "Full name of category for parsing."
+          required: true
+          schema:
+            type: string
+            example: "Макароны, крупы, мука"
+        - name: address
+          in: query
+          description: "Your delivery address for more accurate receipt of goods by location."
+          required: true
+          schema:
+            type: string
+            example: "Москва, Красная площадь, 3"
+        - name: market
+          in: query
+          description: "Parsing store."
+          required: true
+          schema:
+            type: string
+            example: "METRO"
+      responses:
+        '200':
+          description: "Success in getting a list of products with the given parameters."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParseResponse'
+        '400':
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '499':
+          description: "Client Closed Request"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '504':
+          description: "Gateway Timeout"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        name:
+          type: string
+        link:
+          type: string
+        price:
+          type: number
+      required:
+        - name
+        - price
+        - link
+
+    ParseResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Product'
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+      required:
+        - status
+        - message

@@ -1,0 +1,54 @@
+services:
+  market-parser:
+    build: ./
+    container_name: market-parser
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - chromium
+    restart: unless-stopped
+    networks:
+      - backend
+  chromium:
+    image: ghcr.io/go-rod/rod:latest
+    container_name: chromium
+    ports:
+      - "7317:7317"
+    shm_size: 2g
+    mem_limit: 2g
+    volumes:
+        - ${BROWSER_USER_DATA_DIR_LOCAL}:/profile-backup:ro
+        - chromium_profile:/user-data-dir
+    entrypoint: >
+      sh -c "
+      cp -rp /profile-backup/. /user-data-dir/ && 
+      rm -f /user-data-dir/SingletonLock && 
+      rod-manager --allow-all"
+    restart: unless-stopped
+    networks:
+      - backend
+  swagger-ui:
+    image: swaggerapi/swagger-ui:latest
+    container_name: swagger-ui
+    user: root
+    ports:
+      - "8081:8080"
+    environment:
+      SWAGGER_JSON: /openapi/openapi.yaml
+    volumes:
+      - ./api/v1/openapi.yaml:/openapi/openapi.yaml:ro
+    depends_on:
+      - market-parser
+    restart: unless-stopped
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  chromium_profile:
+    
