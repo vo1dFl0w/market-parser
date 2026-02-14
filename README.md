@@ -33,7 +33,6 @@
 
 * Go 1.20+ (или версия, указанная в `go.mod`).
 * Docker & docker-compose (для контейнерного запуска).
-* Локальный Chromium (для локального запуска через Makefile) или контейнер `chromium` (для docker-compose).
 
 ---
 
