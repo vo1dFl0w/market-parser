@@ -9,6 +9,7 @@ import (
 	"github.com/go-rod/rod/lib/proto"
 	"github.com/vo1dFl0w/market-parser/internal/config"
 	"github.com/vo1dFl0w/market-parser/internal/repository"
+	"github.com/vo1dFl0w/market-parser/pkg/logger"
 )
 
 const (
@@ -23,17 +24,16 @@ const (
 )
 
 type Chromium struct {
-	cfg *Config
+	cfg    *Config
+	logger logger.Logger
 }
 
-func NewChromium(cfg *config.Config) *Chromium {
-	return &Chromium{cfg: NewConfigs(cfg)}
+func NewChromium(cfg *config.Config, logger logger.Logger) *Chromium {
+	return &Chromium{cfg: NewConfigs(cfg), logger: logger}
 }
 
 func (ch *Chromium) Connect(ctx context.Context) (*rod.Browser, error) {
 	var browser *rod.Browser
-
-	fmt.Println("work timeout", ch.cfg.WorkTimeout)
 	// docker-compose
 	// must set headless=true in configs/confgi.yaml
 	// must set http_addr=market-parser:8080 in configs/config.yaml
@@ -43,11 +43,7 @@ func (ch *Chromium) Connect(ctx context.Context) (*rod.Browser, error) {
 			return nil, fmt.Errorf("new managed: %w", err)
 		}
 
-		l.UserDataDir(ch.cfg.UserDataDir).
-			ProfileDir(ch.cfg.ProfileDir).
-			Leakless(true).
-			KeepUserDataDir().
-			HeadlessNew(ch.cfg.Headless).
+		l.HeadlessNew(ch.cfg.Headless).
 			Set("user-agent", userAgentLinux).
 			Set("disable-blink-features", "AutomationControlled").
 			Set("disable-infobars").
@@ -78,9 +74,6 @@ func (ch *Chromium) Connect(ctx context.Context) (*rod.Browser, error) {
 		// must set headless=false in configs/confgi.yaml
 		// must set http_addr=localhost:8080 in configs/config.yaml
 		l := launcher.New().
-			UserDataDir(ch.cfg.UserDataDirLocal).
-			ProfileDir(ch.cfg.ProfileDir).
-			Leakless(true).
 			HeadlessNew(ch.cfg.Headless).
 			Set("disable-blink-features", "AutomationControlled").
 			Set("disable-infobars").
@@ -151,7 +144,7 @@ func (ch *Chromium) NewPage(ctx context.Context) (repository.Page, error) {
 		DeviceScaleFactor: 1,
 		Mobile:            false,
 	}); err != nil {
-		fmt.Printf("set view port: %s\n", err.Error())
+		return nil, fmt.Errorf("set view port: %s\n", err)
 	}
 
 	_, err = proto.PageNavigate{

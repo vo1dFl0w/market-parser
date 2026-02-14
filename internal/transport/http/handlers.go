@@ -21,7 +21,6 @@ func NewHandler(logger logger.Logger, parserSrv usecase.ParserService, requestTi
 }
 
 func (h *Handler) APIV1MarketParserParseGet(ctx context.Context, params httpgen.APIV1MarketParserParseGetParams) (httpgen.APIV1MarketParserParseGetRes, error) {
-	h.logger.Info("[Handler] Передаём запрос в parser service...")
 	res, err := h.parserSrv.ParseProductsByCategory(ctx, params.Category, params.Address, params.Market)
 	if err != nil {
 		httpErr := MapError(err)

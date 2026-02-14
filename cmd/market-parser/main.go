@@ -45,7 +45,7 @@ func run(ctx context.Context) error {
 	loggerCfg := logger.NewLoggerConfig(cfg.Server.Env, cfg.Options.LoggerTimeFormat)
 	logger := logger.LoadLogger(loggerCfg)
 
-	chromiumRepo := chromium.NewChromium(cfg)
+	chromiumRepo := chromium.NewChromium(cfg, logger)
 	browserRepo := chromium.NewBrowser(chromiumRepo)
 	kuperParser := parsers.NewKuperParser(cfg, logger, browserRepo.Chromium())
 	parserSrv := usecase.NewParserService(kuperParser)

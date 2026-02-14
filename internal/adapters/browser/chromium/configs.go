@@ -13,20 +13,23 @@ type ProxyConfig struct {
 	Password string
 }
 
+type CaptchaSelectors struct {
+	KuperSmartCaptcha    string
+	KuperCaptchaCheckBox string
+}
+
 type Config struct {
-	UserDataDir             string
-	UserDataDirLocal        string
-	ProfileDir              string
-	WsURL                   string
-	Headless                bool
-	Referrer                string
-	AcceptLanguage          string
-	Proxy                   *ProxyConfig
-	SessionTimeout          time.Duration
-	WorkTimeout             time.Duration
-	WaitStableDuration      time.Duration
-	WaitDOMStableDuration   time.Duration
-	WaitDOMStableDiff       float64
+	WsURL                 string
+	Headless              bool
+	Referrer              string
+	AcceptLanguage        string
+	Proxy                 *ProxyConfig
+	CaptchaSelectors      *CaptchaSelectors
+	SessionTimeout        time.Duration
+	WorkTimeout           time.Duration
+	WaitStableDuration    time.Duration
+	WaitDOMStableDuration time.Duration
+	WaitDOMStableDiff     float64
 }
 
 func NewConfigs(cfg *config.Config) *Config {
@@ -37,19 +40,22 @@ func NewConfigs(cfg *config.Config) *Config {
 		Password: cfg.Browser.Proxy.Password,
 	}
 
+	captcha := &CaptchaSelectors{
+		KuperSmartCaptcha:    *cfg.Server.KuperCfg.SmartCaptchaSelector,
+		KuperCaptchaCheckBox: *cfg.Server.KuperCfg.CaptchaCheckBox,
+	}
+
 	return &Config{
-		UserDataDir:             cfg.Browser.UserDataDir,
-		UserDataDirLocal:        cfg.Browser.UserDataDirLocal,
-		ProfileDir:              cfg.Browser.ProfileDir,
-		WsURL:                   cfg.Browser.WsURL,
-		Headless:                cfg.Browser.Headless,
-		Referrer:                cfg.Browser.Referer,
-		AcceptLanguage:          cfg.Browser.AcceptLanguage,
-		Proxy:                   proxy,
-		SessionTimeout:          cfg.Browser.SessionTimeout,
-		WorkTimeout:             cfg.Browser.WorkTimeout,
-		WaitStableDuration:      cfg.Browser.WaitStableDuration,
-		WaitDOMStableDuration:   cfg.Browser.WaitDOMStableDuration,
-		WaitDOMStableDiff:       cfg.Browser.WaitDOMStableDiff,
+		WsURL:                 cfg.Browser.WsURL,
+		Headless:              cfg.Browser.Headless,
+		Referrer:              cfg.Browser.Referer,
+		AcceptLanguage:        cfg.Browser.AcceptLanguage,
+		Proxy:                 proxy,
+		CaptchaSelectors:      captcha,
+		SessionTimeout:        cfg.Browser.SessionTimeout,
+		WorkTimeout:           cfg.Browser.WorkTimeout,
+		WaitStableDuration:    cfg.Browser.WaitStableDuration,
+		WaitDOMStableDuration: cfg.Browser.WaitDOMStableDuration,
+		WaitDOMStableDiff:     cfg.Browser.WaitDOMStableDiff,
 	}
 }

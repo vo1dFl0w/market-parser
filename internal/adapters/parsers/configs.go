@@ -14,6 +14,8 @@ type KuperConfig struct {
 }
 
 type KuperSelectors struct {
+	CaptchaCheckBox              string
+	SmartCaptchaSelector         string
 	CurrentAddressSelector       string
 	AddressButtonSelector        string
 	AddressCheckAttributeValue   string
@@ -35,6 +37,7 @@ func NewKuperConfig(cfg *config.Config) *KuperConfig {
 		BaseURL:         *cfg.Server.KuperCfg.BaseURL,
 		Referrer:        cfg.Browser.Referer,
 		Selectors: &KuperSelectors{
+			SmartCaptchaSelector:         *cfg.Server.KuperCfg.SmartCaptchaSelector,
 			CurrentAddressSelector:       *cfg.Server.KuperCfg.CurrentAddressSelector,
 			AddressButtonSelector:        *cfg.Server.KuperCfg.AddressButtonSelector,
 			AddressCheckAttributeValue:   *cfg.Server.KuperCfg.AddressCheckAttributeValue,

@@ -24,13 +24,9 @@ type ServerConfig struct {
 }
 
 type BrowserConfig struct {
-	UserDataDir      string      `yaml:"user_data_dir" env:"BROWSER_USER_DATA_DIR" env-required:"true"`
-	UserDataDirLocal string      `yaml:"user_data_dir_local" env:"BROWSER_USER_DATA_DIR"`
-	ProfileDir       string      `yaml:"profile_dir" env:"BROWSER_PROFILE_DIR" env-required:"true"`
-	WsURL            string      `yaml:"ws_url" env:"BROWSER_WS_URL" env-required:"true"`
-	Headless         bool        `yaml:"headless"`
-	Proxy            ProxyConfig `yaml:"proxy"`
-
+	WsURL                   string        `yaml:"ws_url" env:"BROWSER_WS_URL" env-required:"true"`
+	Headless                bool          `yaml:"headless"`
+	Proxy                   ProxyConfig   `yaml:"proxy"`
 	Referer                 string        `yaml:"referer" env-default:"https://google.com"`
 	AcceptLanguage          string        `yaml:"accept_language" env-default:"ru-RU,ru;q=0.9"`
 	HeadlessMode            bool          `yaml:"headless_mode" env:"BROWSER_HEADLESS_MODE" env-default:"true"`
@@ -49,19 +45,21 @@ type OptionsConfig struct {
 }
 
 type KuperConfig struct {
-	BaseURL                       *string `yaml:"base_url" env-required:"true"`
-	ApiProductsPath               *string `yaml:"api_products_path" env-required:"true"`
-	CurrentAddressSelector        *string `yaml:"current_address_selector" env-required:"true"`
-	AddressButtonSelector         *string `yaml:"address_button_selector" env-required:"true"`
-	AddressCheckAttributeValue    *string `yaml:"address_check_attribute_value" env-required:"true"`
-	AddressInputSelector          *string `yaml:"address_input_selector" env-required:"true"`
-	AddressInputDropDownSelector  *string `yaml:"address_input_drop_down_selector" env-required:"true"`
-	AddressSaveButtonSelector     *string `yaml:"address_save_button_selector" env-required:"true"`
-	MarketSelector                *string `yaml:"market_selector" env-required:"true"`
-	AllProdsSelector              *string `yaml:"all_prods_selector" env-required:"true"`
-	LastPageSelector              *string `yaml:"last_page_selector" env-required:"true"`
-	LastPageText                  *string `yaml:"last_page_text" env-required:"true"`
-	NextPageSelector              *string `yaml:"next_page_selector" env-required:"true"`
+	BaseURL                      *string `yaml:"base_url" env-required:"true"`
+	ApiProductsPath              *string `yaml:"api_products_path" env-required:"true"`
+	CaptchaCheckBox              *string `yaml:"captcha_check_box" env-required:"true"`
+	SmartCaptchaSelector         *string `yaml:"smart_captcha_selector" env-required:"true"`
+	CurrentAddressSelector       *string `yaml:"current_address_selector" env-required:"true"`
+	AddressButtonSelector        *string `yaml:"address_button_selector" env-required:"true"`
+	AddressCheckAttributeValue   *string `yaml:"address_check_attribute_value" env-required:"true"`
+	AddressInputSelector         *string `yaml:"address_input_selector" env-required:"true"`
+	AddressInputDropDownSelector *string `yaml:"address_input_drop_down_selector" env-required:"true"`
+	AddressSaveButtonSelector    *string `yaml:"address_save_button_selector" env-required:"true"`
+	MarketSelector               *string `yaml:"market_selector" env-required:"true"`
+	AllProdsSelector             *string `yaml:"all_prods_selector" env-required:"true"`
+	LastPageSelector             *string `yaml:"last_page_selector" env-required:"true"`
+	LastPageText                 *string `yaml:"last_page_text" env-required:"true"`
+	NextPageSelector             *string `yaml:"next_page_selector" env-required:"true"`
 }
 
 type ProxyConfig struct {

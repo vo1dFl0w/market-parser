@@ -5,6 +5,8 @@ server:
   kuper_config:
     base_url: "https://kuper.ru"
     api_products_path: "products"
+    captcha_check_box: "captcha-checkbox"
+    smart_captcha_selector: "label[for*='is-robot']"
     current_address_selector: "span[data-qa*='current-ship-address']"
     address_button_selector: "button[data-qa*='select-button']"
     address_input_selector: "input[placeholder*='Ваш адрес']"

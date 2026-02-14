@@ -9,12 +9,11 @@ import (
 	"github.com/vo1dFl0w/market-parser/internal/repository"
 )
 
-var workTimeout time.Duration = time.Millisecond*5000
+var workTimeout time.Duration = time.Millisecond * 5000
 
 type rodElement struct {
 	element *rod.Element
 }
-
 
 func (re *rodElement) Element(ctx context.Context, selector string) (repository.Element, error) {
 	elem, err := re.element.Timeout(workTimeout).Context(ctx).Element(selector)
