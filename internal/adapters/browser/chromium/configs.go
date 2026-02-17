@@ -21,6 +21,9 @@ type CaptchaSelectors struct {
 type Config struct {
 	WsURL                 string
 	Headless              bool
+	TraceMode             bool
+	UserAgent             string
+	Platoform             string
 	Referrer              string
 	AcceptLanguage        string
 	Proxy                 *ProxyConfig
@@ -48,6 +51,9 @@ func NewConfigs(cfg *config.Config) *Config {
 	return &Config{
 		WsURL:                 cfg.Browser.WsURL,
 		Headless:              cfg.Browser.Headless,
+		TraceMode:             cfg.Browser.TraceMode,
+		UserAgent:             cfg.Browser.UserAgent,
+		Platoform:             cfg.Browser.Platform,
 		Referrer:              cfg.Browser.Referer,
 		AcceptLanguage:        cfg.Browser.AcceptLanguage,
 		Proxy:                 proxy,

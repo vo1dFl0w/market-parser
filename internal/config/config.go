@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/ilyakaznacheev/cleanenv"
-	//"github.com/joho/godotenv"
 )
 
 type Config struct {
@@ -26,13 +25,16 @@ type ServerConfig struct {
 type BrowserConfig struct {
 	WsURL                   string        `yaml:"ws_url" env:"BROWSER_WS_URL" env-required:"true"`
 	Headless                bool          `yaml:"headless"`
+	HumanLikeMode           bool          `yaml:"human_like_mode"`
+	TestParserMode          bool          `yaml:"test_parser_mode"`
+	TraceMode               bool          `yaml:"trace_mode"`
+	UserAgent               string        `yaml:"user_agent" env-required:"true"`
+	Platform                string        `yaml:"platform" env-required:"true"`
 	Proxy                   ProxyConfig   `yaml:"proxy"`
 	Referer                 string        `yaml:"referer" env-default:"https://google.com"`
 	AcceptLanguage          string        `yaml:"accept_language" env-default:"ru-RU,ru;q=0.9"`
 	HeadlessMode            bool          `yaml:"headless_mode" env:"BROWSER_HEADLESS_MODE" env-default:"true"`
 	SessionTimeout          time.Duration `yaml:"session_timeout" env:"BROWSER_SESSION_TIMEOUT" env-default:"180000ms"`
-	HumanLikeMode           bool          `yaml:"human_like_mode"`
-	TestParserMode          bool          `yaml:"test_parser_mode"`
 	WorkTimeout             time.Duration `yaml:"work_timeout" env-default:"5000ms"`
 	WaitStableDuration      time.Duration `yaml:"wait_stable_duration" env:"BROWSER_WAIT_STABLE_DURATION" env-default:"500ms"`
 	WaitDOMStableDuration   time.Duration `yaml:"wait_dom_stable_duration" env:"BROWSER_WAIT_DOM_STABLE_DURATION" env-default:"300ms"`
@@ -71,12 +73,6 @@ type ProxyConfig struct {
 
 func LoadConfig() (*Config, error) {
 	var cfg Config
-
-	/*
-		if err := godotenv.Load(".env"); err != nil {
-			return nil, fmt.Errorf("load env-file: %w", err)
-		}
-	*/
 
 	path := os.Getenv("CONFIG_PATH")
 	if path == "" {

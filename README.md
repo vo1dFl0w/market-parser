@@ -51,39 +51,10 @@
 * `test_mode` — `true`/`false` (для быстрого тестирования функционала парсинга страниц).
 * `human_like_mode` — `true`/`false` (вкл./вык. автоматическое движение мыши/скроллинг).
 
----
-
-## Способ A — локальный запуск (с локальным Chromium через Makefile)
-
-Этот способ удобен для разработки и отладки (вы видите браузер). В Makefile есть цель для запуска приложения и локального браузера.
-
-
-1. Подготовьте `.env` на основе `.env.example` и `config.yaml`.
-
-2. Соберите и запустите приложение через Makefile:
-
-```bash
-# сборка
-make build
-
-# запуск (запускает приложение и подключается к локальному Chromium)
-make run
-
-# запустить swagger ui по адресу http://localhost:8081 для отправки запросов
-make swaggerui
-```
-
-3. Пример HTTP-запроса к API (парсинг категории):
-
-```bash
-curl 'http://localhost:8080/api/v1/market-parser/parse?category=Мясо, птица&address=Москва, Красная площадь, 3&market=metro'
-```
-
-Ответ — JSON-массив объектов `{ "name": "...", "price": 123.0, "link": "https://..." }`.
 
 ---
 
-## Способ B — запуск через Docker Compose
+## Способ 1 — запуск через Docker Compose
 
 Контейнерный запуск рекомендован для воспроизводимости и тестового деплоя. В `docker-compose.yaml` описаны два сервиса: `market-parser` и `chromium`.
 
@@ -127,6 +98,36 @@ curl 'http://localhost:8080/api/v1/market-parser/parse?category=Мясо, пти
   { "name": "Свинная шейка", "price": 456.0, "link": "https://..." }
 ]
 ```
+
+---
+
+## Способ 2 — локальный запуск (с локальным Chromium через Makefile для дебага в headful режиме)
+
+Этот способ удобен для разработки и отладки. В Makefile есть цель для запуска приложения и локального браузера.
+
+
+1. Подготовьте `.env` на основе `.env.example` и `config.yaml`.
+
+2. Соберите и запустите приложение через Makefile:
+
+```bash
+# сборка
+make build
+
+# запуск (запускает приложение и подключается к локальному Chromium)
+make run
+
+# запустить swagger ui по адресу http://localhost:8081 для отправки запросов
+make swaggerui
+```
+
+3. Пример HTTP-запроса к API (парсинг категории):
+
+```bash
+curl 'http://localhost:8080/api/v1/market-parser/parse?category=Мясо, птица&address=Москва, Красная площадь, 3&market=metro'
+```
+
+Ответ — JSON-массив объектов `{ "name": "...", "price": 123.0, "link": "https://..." }`.
 
 ---
 

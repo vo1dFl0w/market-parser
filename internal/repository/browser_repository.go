@@ -8,5 +8,5 @@ import (
 
 type BrowserRepository interface {
 	Connect(ctx context.Context) (*rod.Browser, error)
-	NewPage(ctx context.Context) (Page, error)
+	NewPage(ctx context.Context, markeyURL string) (Page, error)
 }

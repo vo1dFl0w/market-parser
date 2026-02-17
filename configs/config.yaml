@@ -21,18 +21,22 @@ server:
   shutdown_timeout: 15000ms
 
 browser:
-  user_data_dir: /user-data-dir
-  user_data_dir_local: /home/voidflow/.config/chromium
-  profile_dir: Default
   ws_url: ws://chromium:7317 # ws_url from .env
   headless: true
   human_like_mode: true
   test_parser_mode: true
+  trace_mode: true
+  user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+              #userAgentWindows = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+	            #platformWindows  = "Win32"
+	            #userAgentMacOS = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+              #platoformMacOS = "MacIntel"
+  platform: "Linux x86_64"
   proxy:
-    ip: # ip from .env
-    port: # port from .env
-    login: # login from .env
-    password: # password from .env
+    ip:
+    port: 
+    login: 
+    password: 
   referer: "https://google.com"
   accept_language: "ru-RU,ru;q=0.9"
   work_timeout: 5000ms

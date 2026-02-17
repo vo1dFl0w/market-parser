@@ -70,7 +70,7 @@ func run(ctx context.Context) error {
 
 	go func() {
 		logger.Info("server started", "host", httpServer.Addr)
-		if err := httpServer.ListenAndServe(); err != nil && errors.Is(err, http.ErrServerClosed) {
+		if err := httpServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			serverErr <- err
 		} else {
 			serverErr <- nil

@@ -1,4 +1,4 @@
-.PHONY: build run swaggui install-tools ogen
+.PHONY: build run swaggerui install-tools ogen
 
 # build app
 build:
@@ -9,7 +9,7 @@ run: build
 	SERVER_HTTP_ADDR="localhost:8080" CONFIG_PATH=./configs/config.yaml ./market-parser
 
 # run swagger ui to make requests
-swaggui:
+swaggerui:
 	docker run --rm -p 8081:8080 -e SWAGGER_JSON=/openapi.yaml -v ./api/v1/openapi.yaml:/openapi.yaml swaggerapi/swagger-ui
 
 # installing all necessary tools

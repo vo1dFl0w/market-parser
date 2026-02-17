@@ -34,21 +34,18 @@ func NewKuperParser(cfg *config.Config, logger logger.Logger, browser repository
 func (kp *kuper) GetAllProductsByCategory(ctx context.Context, category string, address string, market string) ([]domain.Products, error) {
 	selector := kp.cfg.Selectors
 
-	page, err := kp.browser.NewPage(ctx)
+	// создание и переход на сайт kuper.ru
+	page, err := kp.browser.NewPage(ctx, kp.cfg.BaseURL)
 	if err != nil {
 		return nil, fmt.Errorf("new page: %w", err)
 	}
 	defer page.CloseBrowser()
 	defer page.ClosePage()
 
-	// переход на сайт kuper.ru
-	if err := page.NavigateWithReferrer(ctx, kp.cfg.BaseURL); err != nil {
-		return nil, fmt.Errorf("navigate with referrer %s: %w", kp.cfg.BaseURL, err)
-	}
 	if err := page.WaitLoad(ctx); err != nil {
 		return nil, fmt.Errorf("wait dom stable: %w", err)
 	}
-	if err := page.WaitDOMStable(ctx); err != nil {
+	if err := page.WaitStable(ctx); err != nil {
 		return nil, fmt.Errorf("wait dom stable: %w", err)
 	}
 	if err := page.CheckCaptcha(ctx, kp.cfg.Selectors.CaptchaCheckBox, kp.cfg.Selectors.SmartCaptchaSelector); err != nil {
